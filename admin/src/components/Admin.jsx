@@ -1,10 +1,42 @@
 import React, { useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 export default function Admin() {
+  const navigate = useNavigate();
   const [selectedOption, setSelectedOption] = useState("");
 
   const handleSelect = (event) => {
     setSelectedOption(event.target.value);
+  };
+  const [data, setData] = useState({
+    email: "",
+    password: "",
+  });
+  const changeHandeler = (e) => {
+    setData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+  const submitHandeler = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await axios.post("/" + selectedOption + "/login", {
+        ...data,
+      });
+      localStorage.setItem("token", res.data.token);
+      console.log(res.data);
+      toast.success("Welcome");
+      if (selectedOption === "admin") {
+        navigate("/admin");
+      } else {
+        navigate("/health");
+      }
+    } catch (err) {
+      toast.error("Invalid Credentials");
+      console.log(err);
+    }
   };
 
   return (
@@ -17,10 +49,13 @@ export default function Admin() {
                 Login
               </h1>
 
-              <form className="space-y-4 md:space-y-6" action="#">
+              <form
+                className="space-y-4 md:space-y-6"
+                onSubmit={submitHandeler}
+              >
                 <div>
                   <label
-                    for="email"
+                    htmlFor="email"
                     className="block mb-2 text-sm font-medium text-gray-900 "
                   >
                     Your email
@@ -29,6 +64,7 @@ export default function Admin() {
                   <input
                     type="email"
                     name="email"
+                    onChange={changeHandeler}
                     id="email"
                     className=" border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="name@company.com"
@@ -38,7 +74,7 @@ export default function Admin() {
 
                 <div>
                   <label
-                    for="password"
+                    htmlFor="password"
                     className="block mb-2 text-sm font-medium text-gray-900 "
                   >
                     Password
@@ -47,6 +83,7 @@ export default function Admin() {
                     type="password"
                     name="password"
                     id="password"
+                    onChange={changeHandeler}
                     placeholder=""
                     className=" border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     required=""
@@ -69,40 +106,13 @@ export default function Admin() {
                     id="category"
                     className="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5"
                   >
-                    <option selected="selected" value="Admin">
+                    <option selected="selected" value="admin">
                       Admin
                     </option>
-                    <option value="Health Services">Health Service</option>
+                    <option value="healthservice">Health Service</option>
                   </select>
                 </div>
 
-                <div className="flex items-center justify-between">
-                  <div className="flex items-start">
-                    <div className="flex items-center h-5">
-                      <input
-                        id="remember"
-                        aria-describedby="remember"
-                        type="checkbox"
-                        className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
-                        required=""
-                      />
-                    </div>
-                    <div className="ml-3 text-sm">
-                      <label
-                        for="remember"
-                        className="text-gray-500 dark:text-gray-300"
-                      >
-                        Remember me
-                      </label>
-                    </div>
-                  </div>
-                  <a
-                    href="#"
-                    className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500"
-                  >
-                    Forgot password?
-                  </a>
-                </div>
                 <button
                   type="submit"
                   className="w-full text-white bg-blue-600 hover:bg-primary-700 focus:ring-4  focus:ring-primary-300 font-medium rounded-lg text-xl px-5 py-2.5 text-center border-none"
@@ -110,7 +120,7 @@ export default function Admin() {
                   LOGIN
                 </button>
 
-                {selectedOption == "Health Services" && (
+                {selectedOption == "healthservice" && (
                   <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                     Don’t have an account yet?{" "}
                     <a

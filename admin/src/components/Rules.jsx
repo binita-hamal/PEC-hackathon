@@ -2,21 +2,15 @@ import React, { useRef, useState } from "react";
 
 import Card from "./Card";
 import ic from "../images/508-icon.png";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function Activities() {
+  const navigate = useNavigate();
   const [text, setText] = useState("");
   const [items, setItems] = useState([]);
 
-
-
-
-  //   const handleAddItem = () => {
-  //     if (text.trim()) {
-  //       setItems([...items, text]);
-  //       setText("");
-  //     }
-  //   };
-  console.log(items);
   const handleAddItem = () => {
     // if (text.trim()) {
     setItems([...items, text]);
@@ -24,21 +18,15 @@ export default function Activities() {
     // }
   };
 
-  const { data, setData } = useState({
-    nameofplace: "",
-    rules: "",
- 
+  const [data, setData] = useState({
+    name: "",
+    profile:
+      "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0d/d6/96/36/photo4jpg.jpg?w=1400&h=1400&s=1",
   });
+
   const changeHandeler = (e) => {
-    setData((prev) => {
-      return {
-        ...prev,
-        [e.target.name]: e.target.value,
-      };
-    });
+    setData({ ...data, [e.target.name]: e.target.value });
   };
-
-
 
   const inputFileRef = useRef(null);
   const imageViewRef = useRef(null);
@@ -48,13 +36,35 @@ export default function Activities() {
     imageViewRef.current.style.backgroundImage = `url(${imgLink})`;
     imageViewRef.textContent = "";
   };
-
+  const submitHandeler = async (e) => {
+    e.preventDefault();
+    console.log({ ...data, rules: items });
+    try {
+      const res = await axios.post(
+        "/admin/rule",
+        {
+          ...data,
+          rules: items,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      toast.success("Added Successfully");
+      navigate("/admin");
+      console.log(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <div>
       <div className="min-h-screen">
         <div className="text-neutral-content">
           <div className="max-w-4xl m-4">
-            <form className="max-w-5xl mx-auto">
+            <form className="max-w-5xl mx-auto" onSubmit={submitHandeler}>
               <div className="mb-2 flex items-center">
                 <label
                   htmlFor="place-name"
@@ -63,7 +73,7 @@ export default function Activities() {
                   Name of the Place
                 </label>
                 <input
-                  name="nameofplace"
+                  name="name"
                   onChange={changeHandeler}
                   type="text"
                   id="place-name"
@@ -114,17 +124,16 @@ export default function Activities() {
                   type="text"
                   value={text}
                   name="rules"
-                  onChange={changeHandeler}
                   onChangeCapture={(e) => setText(e.target.value)}
                   // name="overview"
                   id="overview"
                   className="w-2/3 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5"
-                  required
                 />
               </div>
 
               <div className="card-actions">
                 <button
+                  type="button"
                   onClick={handleAddItem}
                   className="mb-3 btn btn-primary hover:bg-blue-500"
                 >

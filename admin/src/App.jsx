@@ -7,10 +7,16 @@ import Rules from "../src/components/Rules";
 import Activites from "./components/Activites";
 import Admin from "./components/Admin";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
+import axios from "axios";
+axios.defaults.baseURL = "https://tokma.onrender.com/api";
+import { Toaster } from "react-hot-toast";
+import Health from "./components/Health";
+
 function App() {
   return (
     <>
       <BrowserRouter>
+        <Toaster />
         <Routes>
           <Route path="/" element={<Admin />} />
           <Route path="/admin" element={<Home1 />} />
@@ -22,6 +28,7 @@ function App() {
           <Route path="activity" element={<Activites />} />
 
           <Route path="admin" element={<Admin />} />
+          <Route path="health" element={<Health />} />
         </Routes>
       </BrowserRouter>
 

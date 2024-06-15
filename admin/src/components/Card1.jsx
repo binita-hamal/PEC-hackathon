@@ -1,41 +1,85 @@
-import React from 'react'
+import React from "react";
+import axios from "axios";
+import { toast } from "react-hot-toast";
+export default function Card1({
+  age,
+  contact,
+  desc,
+  firstName,
+  lastName,
+  location,
+  gender,
+  email,
+  id,
+  service,
+  refetch,
+}) {
+  return (
+    <div className="card  w-96 bg-gray-100 text-neutral-content">
+      <div className="card-body ">
+        {/* <h2 className="card-title">Cookies!</h2> */}
 
-export default function Card1() {
-    return (
+        <p className="m-0">
+          {firstName} {lastName}
+        </p>
+        <p className="m-0">{email}</p>
+        <p className="m-0">{gender}</p>
+        <p className="m-0">{contact}</p>
+        <p className="m-0">{age}</p>
+        <p className="m-0">{location}</p>
+        <p className="m-0">{desc}</p>
 
+        <div className="card-actions">
+          <button
+            className="btn btn-primary hover:bg-blue-500"
+            onClick={async () => {
+              try {
+                const res = await axios.get(
+                  "/admin/" + "approve-" + service + "/" + id,
+                  {
+                    headers: {
+                      Authorization: `Bearer ${localStorage.getItem("token")}`,
+                    },
+                  }
+                );
+                toast.success("Approved");
+                refetch();
+                console.log(res.data);
+              } catch (err) {
+                toast.error("Dissaproved");
 
-        <div className="card w-auto bg-gray-100 text-neutral-content">
-            <div className="card-body">
-                {/* <h2 className="card-title">Cookies!</h2> */}
-                <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-                    <div className="w-10 rounded-full flex">
-                        <img alt="Tailwind CSS Navbar component" src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
-                    </div>
-                </div>
+                console.log(err);
+              }
+            }}
+          >
+            Accept
+          </button>
+          <button
+            className="btn btn-ghost hover:bg-blue-500 hover:text-white"
+            onClick={async () => {
+              try {
+                const res = await axios.get(
+                  "/admin/" + "reject-" + service + "/" + id,
+                  {
+                    headers: {
+                      Authorization: `Bearer ${localStorage.getItem("token")}`,
+                    },
+                  }
+                );
+                toast.success("Rejected");
+                refetch();
+                console.log(res.data);
+              } catch (err) {
+                toast.error("Not Rejected");
 
-                <p className='m-0'>John Doe</p>
-                <p className='m-0'>Experienced guide with 10 years in the tourism industry.</p>
-                <p>john.doe@example.com</p>
-
-
-                <div className="card-actions">
-                    {/* <button className="btn btn-primary">Accept</button>
-                                        <button className="btn btn-ghost">Deny</button> */}
-
-                    {/* <button className="btn bg-blue-500 text-white hover:bg-blue-700">Accept</button>
-                    <button className="btn btn-ghost hover:bg-blue-500 hover:text-white">Deny</button> */}
-
-                    <button className="btn btn-primary hover:bg-blue-500">Accept</button>
-                    <button className="btn btn-ghost hover:bg-blue-500 hover:text-white">Deny</button>
-                </div>
-            </div>
-
+                console.log(err);
+              }
+            }}
+          >
+            Deny
+          </button>
         </div>
-
-
-
-
-
-
-    )
+      </div>
+    </div>
+  );
 }

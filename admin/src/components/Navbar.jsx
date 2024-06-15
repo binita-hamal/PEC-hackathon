@@ -117,7 +117,7 @@ import logo from "../images/logos.png";
 export default function Navbar() {
   return (
     <>
-      <navbar className="fixed top-0 z-10 bg-purple-600 w-full">
+      <nav className="fixed top-0 z-10 bg-purple-600 w-full">
         <div className="navbar justify-between">
           {" "}
           {/* Changed to light beige */}
@@ -300,7 +300,7 @@ export default function Navbar() {
             </div>
           </div>
         </div>
-      </navbar>
+      </nav>
     </>
   );
 }
