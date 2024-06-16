@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 export default function Admin() {
   const navigate = useNavigate();
-  const [selectedOption, setSelectedOption] = useState("");
+  const [selectedOption, setSelectedOption] = useState("admin");
 
   const handleSelect = (event) => {
     setSelectedOption(event.target.value);
@@ -19,8 +19,10 @@ export default function Admin() {
       [e.target.name]: e.target.value,
     }));
   };
+  console.log(selectedOption);
   const submitHandeler = async (e) => {
     e.preventDefault();
+
     try {
       const res = await axios.post("/" + selectedOption + "/login", {
         ...data,
@@ -30,7 +32,7 @@ export default function Admin() {
       toast.success("Welcome");
       if (selectedOption === "admin") {
         navigate("/admin");
-      } else {
+      } else if (selectedOption === "healthservice") {
         navigate("/health");
       }
     } catch (err) {

@@ -7,8 +7,6 @@ import Rules from "../src/components/Rules";
 import Activites from "./components/Activites";
 import Admin from "./components/Admin";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
-import axios from "axios";
-axios.defaults.baseURL = "https://tokma.onrender.com/api";
 import { Toaster } from "react-hot-toast";
 import Health from "./components/Health";
 
