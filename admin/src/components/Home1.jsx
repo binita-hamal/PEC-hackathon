@@ -75,6 +75,7 @@ export default function Home() {
                       location={s.regionalLocation}
                       gender={s.gender}
                       email={s.email}
+                      profileImg={s.profileImg}
                     />{" "}
                   </div>
                 );
@@ -101,6 +102,30 @@ export default function Home() {
                       location={s.regionalLocation}
                       gender={s.gender}
                       email={s.email}
+                      profileImg={s.profileImg}
+                    />{" "}
+                  </div>
+                );
+              })}
+            </div>
+            <h4 className="text-center my-4">Food And Lodge Request </h4>
+            <div className="flex  justify-center  ml-5 flex-wrap gap-3">
+              {data.foodandlodge.map((s) => {
+                return (
+                  <div
+                    className="flex w-100%  gap-4 justify-between"
+                    key={s._id}
+                  >
+                    <Card2
+                      refetch={refetch}
+                      service={"foodandlodge"}
+                      id={s._id}
+                      contactNo={s.contactNo}
+                      desc={s.description}
+                      country={s.country}
+                      email={s.email}
+                      name={s.name}
+                      profileImg={s.profileImg}
                     />{" "}
                   </div>
                 );

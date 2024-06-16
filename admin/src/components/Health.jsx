@@ -32,6 +32,7 @@ const Health = () => {
       }
     },
   });
+  console.log("data", data);
   console.log(tracker);
   if (isLoading) {
     <h1>Loading...</h1>;
@@ -43,7 +44,7 @@ const Health = () => {
         <div className="card w-96  bg-base-100 shadow-xl">
           <figure className="px-10 pt-10 object-contain">
             <img
-              src="https://img.freepik.com/premium-photo/caregiver-conversation-elderly-woman-laughing-funny-joke-senior-care-humour-health-service-comedy-retirement-home-healthcare-comic-nurse-talking-relax-patient-laugh-bond_590464-224659.jpg"
+              src={data?.profileImg}
               alt="Shoes"
               className="rounded-xl h-80 object-contain"
             />

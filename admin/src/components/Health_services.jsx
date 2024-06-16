@@ -28,7 +28,7 @@ export default function Health_services() {
     contactNo: "",
     description: "",
     profileImg:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSo-UwYAF6NI2dpl2MyuoiBNcBp5fUXpGzpAg&s",
+      "https://www.shutterstock.com/image-photo/young-indian-adult-girl-her-260nw-2093559157.jpg",
   });
   const changeHandeler = (e) => {
     setData((prev) => {

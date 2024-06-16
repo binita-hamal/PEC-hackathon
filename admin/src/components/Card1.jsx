@@ -13,9 +13,17 @@ export default function Card1({
   id,
   service,
   refetch,
+  profileImg,
 }) {
   return (
     <div className="card  w-96 bg-gray-100 text-neutral-content">
+      <figure className="pt-2 ">
+        <img
+          src={profileImg}
+          alt="Shoes"
+          className="rounded-xl object-contain w-full  aspect-video"
+        />
+      </figure>
       <div className="card-body ">
         {/* <h2 className="card-title">Cookies!</h2> */}
 

@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import Foodandlodge from "./FoodAndLodge";
 export default function Admin() {
   const navigate = useNavigate();
   const [selectedOption, setSelectedOption] = useState("admin");
@@ -30,10 +31,13 @@ export default function Admin() {
       localStorage.setItem("token", res.data.token);
       console.log(res.data);
       toast.success("Welcome");
+      // navigate(selectedOption);
       if (selectedOption === "admin") {
         navigate("/admin");
       } else if (selectedOption === "healthservice") {
         navigate("/health");
+      } else if (selectedOption === "foodandlodge") {
+        navigate("/food");
       }
     } catch (err) {
       toast.error("Invalid Credentials");
@@ -112,6 +116,7 @@ export default function Admin() {
                       Admin
                     </option>
                     <option value="healthservice">Health Service</option>
+                    <option value="foodandlodge">Food And Lodge</option>
                   </select>
                 </div>
 
@@ -122,14 +127,16 @@ export default function Admin() {
                   LOGIN
                 </button>
 
-                {selectedOption == "healthservice" && (
+                {(selectedOption == "healthservice" ||
+                  selectedOption == "foodandlodge") && (
                   <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                     Don’t have an account yet?{" "}
                     <a
                       href="#"
                       className="font-medium text-primary-600 hover:underline dark:text-primary-500"
                     >
-                      <Link to={"/healthservices"}>Sign up</Link>
+                      {console.log(selectedOption)}
+                      <Link to={"/" + selectedOption}>Sign up</Link>
                     </a>
                   </p>
                 )}

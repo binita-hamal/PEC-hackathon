@@ -9,7 +9,8 @@ import Admin from "./components/Admin";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import Health from "./components/Health";
-
+import FoodAndLodge from "./components/FoodAndLodge";
+import Food from "./components/Food";
 function App() {
   return (
     <>
@@ -18,13 +19,13 @@ function App() {
         <Routes>
           <Route path="/" element={<Admin />} />
           <Route path="/admin" element={<Home1 />} />
-          <Route path="healthservices" element={<Health_services />} />
+          <Route path="healthservice" element={<Health_services />} />
           <Route path="guides" element={<Guide />} />
           <Route path="accomodation" element={<Accomodation />} />
-
+          <Route path="foodandlodge" element={<FoodAndLodge />} />
           <Route path="rules" element={<Rules />} />
           <Route path="activity" element={<Activites />} />
-
+          <Route path="/food" element={<Food />} />
           <Route path="admin" element={<Admin />} />
           <Route path="health" element={<Health />} />
         </Routes>

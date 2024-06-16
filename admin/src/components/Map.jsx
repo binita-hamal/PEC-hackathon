@@ -12,8 +12,6 @@ const Map = ({ setChanged, tracker, setTracker }) => {
   );
   const defaultProps = {
     center: {
-      // ,28., 83.
-
       lat: 28.211033,
       lng: 83.976961,
     },
